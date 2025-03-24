@@ -9,12 +9,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const appTitle = 'Form Validation Demo';
+    const appTitle = 'Form Validation App';
     return MaterialApp(
       title: appTitle,
       home: Scaffold(
         appBar: AppBar(
           title: const Text(appTitle),
+          backgroundColor: Colors.blue[300],
         ),
         body: const MyCustomForm(),
       ),
@@ -38,74 +39,108 @@ class MyCustomFormState extends State<MyCustomForm> {
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
-    return FormBuilder(
-      key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          FormBuilderTextField(
-            name: 'name',
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter your name';
-              }
-              return null;
-            },
-          ),
-          FormBuilderTextField(
-            name: 'email',
-            keyboardType: TextInputType.emailAddress,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter your email';
-              } else if (!RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$").hasMatch(value)) {
-                return 'Enter a valid email';
-              }
-              return null;
-            },
-          ),
-          FormBuilderTextField(
-            name: 'date_of_birth',
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter your name';
-              }
-              return null;
-            },
-          ),
-          FormBuilderTextField(
-            name: 'password',
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter your password';
-              } else if (value.length < 6) {
-                return 'Password must be at least 6 characters';
-              } else if (!RegExp(r'(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#])')
-                  .hasMatch(value)) {
-                return 'Must include upper, lower, number, and special character';
-              }
-              return null;
-            },
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            child: ElevatedButton(
-              onPressed: () {
-                // Validate returns true if the form is valid, or false otherwise.
-                if (_formKey.currentState!.validate()) {
-                  // If the form is valid, display a snackbar. In the real world,
-                  // you'd often call a server or save the information in a database.
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const SuccessScreen()),
-                  );
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: FormBuilder(
+        key: _formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // Name Input Field
+            FormBuilderTextField(
+              name: 'name',
+              decoration: InputDecoration(
+                labelText: 'Enter your name',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your name';
                 }
+                return null;
               },
-              child: const Text('Submit'),
             ),
-          ),
-        ],
-      ),
+            // Email Input Field
+            SizedBox(height: 20),
+            FormBuilderTextField(
+              name: 'email',
+              decoration: InputDecoration(
+                labelText: 'Enter your email',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your email';
+                } else if (!RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$").hasMatch(value)) {
+                  return 'Enter a valid email';
+                }
+                return null;
+              },
+            ),
+            // Date of Birth Input Field
+            SizedBox(height: 20),
+            FormBuilderDateTimePicker(
+              name: 'date_of_birth',
+              inputType: InputType.date,
+              decoration: InputDecoration(
+                labelText: 'Select your date of birth',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              validator: (value) {
+                if (value == null) {
+                  return 'Please select your date of birth';
+                }
+                return null;
+              },
+            ),
+            // Password Input Field
+            SizedBox(height: 20),
+            FormBuilderTextField(
+              name: 'password',
+              obscureText: true,
+              decoration: InputDecoration(
+                labelText: 'Enter your password',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your password';
+                } else if (value.length < 6) {
+                  return 'Password must be at least 6 characters';
+                } else if (!RegExp(r'(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#])').hasMatch(value)) {
+                  return 'Must include upper, lower, number, and special character';
+                }
+                return null;
+              },
+            ),
+
+            // Submit Button
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 35),
+              child: ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const SuccessScreen()),
+                    );
+                  }
+                },
+                child: const Text('Submit'),
+              ),
+            ),
+          ],
+        ),
+      )
     );
   }
 }
