@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'success_screen.dart';
 
 void main() => runApp(const MyApp());
 
@@ -96,8 +97,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                 if (_formKey.currentState!.validate()) {
                   // If the form is valid, display a snackbar. In the real world,
                   // you'd often call a server or save the information in a database.
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Form Submitted Successfully!')),
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SuccessScreen()),
                   );
                 }
               },
