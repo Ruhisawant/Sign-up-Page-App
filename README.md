@@ -1,16 +1,37 @@
-# signup_page
+# Flutter Form Validation Project
 
-A new Flutter project.
+## Overview
+This Flutter project implements a user signup form with validation, navigation, and a success screen with a confetti animation.
 
-## Getting Started
+## Features
+- **Signup Form** with fields for Name, Email, Date of Birth (DOB), and Password.
+- **Validation**:
+  - Name and Email are required fields.
+  - Email is validated using a regex pattern.
+  - Password must meet length and complexity requirements.
+  - DOB selection is implemented using `FormBuilderDateTimePicker`.
+- **Navigation**: The form submits only when all fields are valid and navigates to the success screen.
+- **Success Page**: Displays a confirmation message with a confetti effect and a "Go Back" button.
 
-This project is a starting point for a Flutter application.
+## Technologies Used
+- Flutter
+- Dart
+- `flutter_form_builder` for form validation
+- `confetti` package for success animation
 
-A few resources to get you started if this is your first Flutter project:
+## Setup Instructions
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/Ruhisawant/Sign-up-Page-App.git
+   cd signup_page
+   ```
+2. Install dependencies:
+   ```sh
+   flutter pub get
+   ```
+3. Run the app:
+   ```sh
+   flutter run
+   ```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Thanks for visiting!
