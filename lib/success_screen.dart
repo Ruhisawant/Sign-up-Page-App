@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'main.dart';
 
 class SuccessScreen extends StatefulWidget {
   const SuccessScreen({super.key});

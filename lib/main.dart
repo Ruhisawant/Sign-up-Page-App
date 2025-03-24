@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'success_screen.dart';
 
 void main() => runApp(const MyApp());
@@ -30,25 +31,20 @@ class MyCustomForm extends StatefulWidget {
 }
 
 // Create a corresponding State class.
-// This class holds data related to the form.
 class MyCustomFormState extends State<MyCustomForm> {
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
-  //
-  // Note: This is a GlobalKey<FormState>,
-  // not a GlobalKey<MyCustomFormState>.
-  final _formKey = GlobalKey<FormState>();
+  // Create a global key that uniquely identifies the Form widget and allows validation of the form.
+  final _formKey = GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
-    return Form(
+    return FormBuilder(
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextFormField(
-            // The validator receives the text that the user has entered.
+          FormBuilderTextField(
+            name: 'name',
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter your name';
@@ -56,35 +52,37 @@ class MyCustomFormState extends State<MyCustomForm> {
               return null;
             },
           ),
-          TextFormField(
-            // The validator receives the text that the user has entered.
+          FormBuilderTextField(
+            name: 'email',
+            keyboardType: TextInputType.emailAddress,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter your email';
-              } else if (!RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}").hasMatch(value)) {
-                return 'Please enter a valid email';
+              } else if (!RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$").hasMatch(value)) {
+                return 'Enter a valid email';
               }
               return null;
             },
           ),
-          TextFormField(
-            // The validator receives the text that the user has entered.
+          FormBuilderTextField(
+            name: 'date_of_birth',
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter your date of birth';
+                return 'Please enter your name';
               }
               return null;
             },
           ),
-          TextFormField(
-            // The validator receives the text that the user has entered.
+          FormBuilderTextField(
+            name: 'password',
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter your password';
               } else if (value.length < 6) {
-                return 'Password must be at least 6 characters long';
-              } else if (!RegExp(r"(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%^&*])").hasMatch(value)) {
-                return 'Password must include uppercase, lowercase, number, and special character';
+                return 'Password must be at least 6 characters';
+              } else if (!RegExp(r'(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#])')
+                  .hasMatch(value)) {
+                return 'Must include upper, lower, number, and special character';
               }
               return null;
             },
